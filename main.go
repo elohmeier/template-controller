@@ -31,11 +31,13 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
+	corev1 "k8s.io/api/core/v1"
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
@@ -131,6 +133,14 @@ func main() {
 		// LeaderElectionReleaseOnCancel: true,
 		Cache: cache.Options{
 			DefaultNamespaces: cacheNamespaces,
+		},
+		Client: client.Options{
+			Cache: &client.CacheOptions{
+				// Secrets are only read on demand (API tokens for listers and comments). Reading them
+				// through the cache would require list/watch permissions on all Secrets, so they are
+				// fetched directly from the apiserver, which allows RBAC to be limited to named Secrets.
+				DisableFor: []client.Object{&corev1.Secret{}},
+			},
 		},
 	})
 	if err != nil {
