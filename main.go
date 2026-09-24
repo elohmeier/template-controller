@@ -181,6 +181,14 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "ListGithubPullRequests")
 		os.Exit(1)
 	}
+	if err = (&controllers.ListForgejoPullRequestsReconciler{
+		Client:       mgr.GetClient(),
+		Scheme:       mgr.GetScheme(),
+		FieldManager: fieldManager,
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "ListForgejoPullRequests")
+		os.Exit(1)
+	}
 	if err = (&controllers.GitProjectorReconciler{
 		Client:       mgr.GetClient(),
 		Scheme:       mgr.GetScheme(),
@@ -208,6 +216,16 @@ func main() {
 		},
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "GithubComment")
+		os.Exit(1)
+	}
+	if err = (&comments.ForgejoCommentReconciler{
+		BaseCommentReconciler: comments.BaseCommentReconciler{
+			Client:       mgr.GetClient(),
+			Scheme:       mgr.GetScheme(),
+			FieldManager: fieldManager,
+		},
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "ForgejoComment")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

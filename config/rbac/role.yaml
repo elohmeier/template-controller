@@ -33,6 +33,32 @@ rules:
 - apiGroups:
   - templates.kluctl.io
   resources:
+  - forgejocomments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - templates.kluctl.io
+  resources:
+  - forgejocomments/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - templates.kluctl.io
+  resources:
+  - forgejocomments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - templates.kluctl.io
+  resources:
   - githubcomments
   verbs:
   - create
@@ -104,6 +130,32 @@ rules:
   - templates.kluctl.io
   resources:
   - gitprojectors/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - templates.kluctl.io
+  resources:
+  - listforgejopullrequests
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - templates.kluctl.io
+  resources:
+  - listforgejopullrequests/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - templates.kluctl.io
+  resources:
+  - listforgejopullrequests/status
   verbs:
   - get
   - patch

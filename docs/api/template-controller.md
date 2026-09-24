@@ -126,6 +126,7 @@ LocalObjectReference
 </h3>
 <p>
 (<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoCommentSpec">ForgejoCommentSpec</a>, 
 <a href="#templates.kluctl.io/v1alpha1.GithubCommentSpec">GithubCommentSpec</a>, 
 <a href="#templates.kluctl.io/v1alpha1.GitlabCommentSpec">GitlabCommentSpec</a>)
 </p>
@@ -205,6 +206,330 @@ string
 </em>
 </td>
 <td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="templates.kluctl.io/v1alpha1.ForgejoComment">ForgejoComment
+</h3>
+<p>ForgejoComment is the Schema for the forgejocomments API</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoCommentSpec">
+ForgejoCommentSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>forgejo</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoPullRequestRef">
+ForgejoPullRequestRef
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>comment</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.CommentSpec">
+CommentSpec
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>suspend</code><br>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Suspend can be used to suspend the reconciliation of this object</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoCommentStatus">
+ForgejoCommentStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="templates.kluctl.io/v1alpha1.ForgejoCommentSpec">ForgejoCommentSpec
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoComment">ForgejoComment</a>)
+</p>
+<p>ForgejoCommentSpec defines the desired state of ForgejoComment</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>forgejo</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoPullRequestRef">
+ForgejoPullRequestRef
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>comment</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.CommentSpec">
+CommentSpec
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>suspend</code><br>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Suspend can be used to suspend the reconciliation of this object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="templates.kluctl.io/v1alpha1.ForgejoCommentStatus">ForgejoCommentStatus
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoComment">ForgejoComment</a>)
+</p>
+<p>ForgejoCommentStatus defines the observed state of ForgejoComment</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>conditions</code><br>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#condition-v1-meta">
+[]Kubernetes meta/v1.Condition
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>commentId</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>lastPostedBodyHash</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="templates.kluctl.io/v1alpha1.ForgejoProject">ForgejoProject
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoPullRequestRef">ForgejoPullRequestRef</a>, 
+<a href="#templates.kluctl.io/v1alpha1.ListForgejoPullRequestsSpec">ListForgejoPullRequestsSpec</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>url</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>URL specifies the base URL of the Forgejo instance, for example <a href="https://codeberg.org">https://codeberg.org</a>.
+Gitea instances are supported as well. If blank, uses <a href="https://codeberg.org">https://codeberg.org</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>owner</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Owner specifies the Forgejo user or organisation that owns the repository</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>repo</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Repo specifies the repository name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tokenRef</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.SecretRef">
+SecretRef
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TokenRef specifies a secret and key to load the Forgejo API token from</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="templates.kluctl.io/v1alpha1.ForgejoPullRequestRef">ForgejoPullRequestRef
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoCommentSpec">ForgejoCommentSpec</a>)
+</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ForgejoProject</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoProject">
+ForgejoProject
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ForgejoProject</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>pullRequestId</code><br>
+<em>
+k8s.io/apimachinery/pkg/util/intstr.IntOrString
+</em>
+</td>
+<td>
+<p>PullRequestId specifies the pull request index (the number shown in the Forgejo UI).</p>
 </td>
 </tr>
 </tbody>
@@ -1333,6 +1658,311 @@ SecretRef
 </table>
 </div>
 </div>
+<h3 id="templates.kluctl.io/v1alpha1.ListForgejoPullRequests">ListForgejoPullRequests
+</h3>
+<p>ListForgejoPullRequests is the Schema for the listforgejopullrequests API</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ListForgejoPullRequestsSpec">
+ListForgejoPullRequestsSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>interval</code><br>
+<em>
+<a href="https://godoc.org/k8s.io/apimachinery/pkg/apis/meta/v1#Duration">
+Kubernetes meta/v1.Duration
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Interval is the interval at which to query the Forgejo API.
+Defaults to 5m.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ForgejoProject</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoProject">
+ForgejoProject
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ForgejoProject</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>head</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Head specifies the head branch to filter for. This matches the <code>head.label</code> field of the
+Forgejo API, which is the plain branch name. Regular expressions are supported.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>base</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Base specifies the base branch to filter for. Regular expressions are supported.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br>
+<em>
+[]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Labels is used to filter the PRs that you want to target</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>state</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>State is an additional PR filter to get only those with a certain state. Default: &ldquo;all&rdquo;</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>limit</code><br>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Limit limits the maximum number of pull requests to fetch. Defaults to 100</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ListForgejoPullRequestsStatus">
+ListForgejoPullRequestsStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="templates.kluctl.io/v1alpha1.ListForgejoPullRequestsSpec">ListForgejoPullRequestsSpec
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ListForgejoPullRequests">ListForgejoPullRequests</a>)
+</p>
+<p>ListForgejoPullRequestsSpec defines the desired state of ListForgejoPullRequests</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>interval</code><br>
+<em>
+<a href="https://godoc.org/k8s.io/apimachinery/pkg/apis/meta/v1#Duration">
+Kubernetes meta/v1.Duration
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Interval is the interval at which to query the Forgejo API.
+Defaults to 5m.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ForgejoProject</code><br>
+<em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoProject">
+ForgejoProject
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ForgejoProject</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>head</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Head specifies the head branch to filter for. This matches the <code>head.label</code> field of the
+Forgejo API, which is the plain branch name. Regular expressions are supported.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>base</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Base specifies the base branch to filter for. Regular expressions are supported.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br>
+<em>
+[]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Labels is used to filter the PRs that you want to target</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>state</code><br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>State is an additional PR filter to get only those with a certain state. Default: &ldquo;all&rdquo;</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>limit</code><br>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Limit limits the maximum number of pull requests to fetch. Defaults to 100</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h3 id="templates.kluctl.io/v1alpha1.ListForgejoPullRequestsStatus">ListForgejoPullRequestsStatus
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ListForgejoPullRequests">ListForgejoPullRequests</a>)
+</p>
+<p>ListForgejoPullRequestsStatus defines the observed state of ListForgejoPullRequests</p>
+<div class="md-typeset__scrollwrap">
+<div class="md-typeset__table">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>conditions</code><br>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#condition-v1-meta">
+[]Kubernetes meta/v1.Condition
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>pullRequests</code><br>
+<em>
+[]k8s.io/apimachinery/pkg/runtime.RawExtension
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <h3 id="templates.kluctl.io/v1alpha1.ListGithubPullRequests">ListGithubPullRequests
 </h3>
 <p>ListGithubPullRequests is the Schema for the listgithubpullrequests API</p>
@@ -2434,6 +3064,7 @@ bool
 </h3>
 <p>
 (<em>Appears on:</em>
+<a href="#templates.kluctl.io/v1alpha1.ForgejoProject">ForgejoProject</a>, 
 <a href="#templates.kluctl.io/v1alpha1.GithubProject">GithubProject</a>, 
 <a href="#templates.kluctl.io/v1alpha1.GitlabProject">GitlabProject</a>)
 </p>

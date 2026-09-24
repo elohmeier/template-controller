@@ -13,6 +13,9 @@ This use case was the initial and first use case why the Template Controller was
 to query the GitHub API for a list of pull requests on a GitHub Repo and then use the result inside a `ObjectTemplate`
 to generate GitOps environments for new pull requests.
 
+The same works for GitLab merge requests via [`ListGitlabMergeRequests`](./spec/v1alpha1/listgitlabmergerequests.md)
+and for Forgejo (or Gitea) pull requests via [`ListForgejoPullRequests`](./spec/v1alpha1/listforgejopullrequests.md).
+
 ## Flux
 
 This example will create templated [Kustomization](https://fluxcd.io/flux/components/kustomize/kustomization/)

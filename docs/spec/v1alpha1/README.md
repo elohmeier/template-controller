@@ -24,10 +24,14 @@ This is the v1alpha1 API specification for defining templating related resources
     + [Spec fields](listgithubpullrequests.md#spec-fields)
 - [ListGitlabMergeRequests CRD](listgitlabmergerequests.md)
     + [Spec fields](listgitlabmergerequests.md#spec-fields)
+- [ListForgejoPullRequests CRD](listforgejopullrequests.md)
+    + [Spec fields](listforgejopullrequests.md#spec-fields)
 - [GithubComment CRD](githubcomment.md)
     + [Spec fields](githubcomment.md#spec-fields)
 - [GitlabComment CRD](gitlabcomment.md)
     + [Spec fields](gitlabcomment.md#spec-fields)
+- [ForgejoComment CRD](forgejocomment.md)
+    + [Spec fields](forgejocomment.md#spec-fields)
 
 ## Implementation
 

@@ -16,8 +16,8 @@ Kluctl. It allows to define template objects which are rendered and applied into
 In its easiest form, an `ObjectTemplate` takes one input object (e.g. a ConfigMap) and creates another object
 (e.g. a Secret) which is then applied into the cluster.
 
-The Template Controller also offers CRDs which allow to query external resources (e.g. GitHub Pull Requests) which can
-then be used as inputs into `ObjectTemplates`.
+The Template Controller also offers CRDs which allow to query external resources (e.g. GitHub, GitLab or Forgejo
+Pull Requests) which can then be used as inputs into `ObjectTemplates`.
 
 ## Use Cases
 
