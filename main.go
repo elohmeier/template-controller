@@ -139,7 +139,11 @@ func main() {
 				// Secrets are only read on demand (API tokens for listers and comments). Reading them
 				// through the cache would require list/watch permissions on all Secrets, so they are
 				// fetched directly from the apiserver, which allows RBAC to be limited to named Secrets.
-				DisableFor: []client.Object{&corev1.Secret{}},
+				// The comment controllers read the kube-system Namespace once per reconcile to derive
+				// the cluster id. A cached read would start a cluster-wide Namespace informer and, when
+				// list/watch on Namespaces is not granted, block the reconcile forever while waiting for
+				// the cache to sync. Reading it directly keeps a `get` on one named Namespace sufficient.
+				DisableFor: []client.Object{&corev1.Secret{}, &corev1.Namespace{}},
 			},
 		},
 	})
