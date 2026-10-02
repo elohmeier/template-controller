@@ -96,6 +96,56 @@ var _ = Describe("ObjectTemplate controller", func() {
 			waitUntilDeleted(key, &templatesv1alpha1.ObjectTemplate{}, timeout)
 		})
 	})
+	Context("Template with dependent objects", func() {
+		ns := fmt.Sprintf("test-%d", rand.Int64())
+
+		key := client.ObjectKey{Name: "t1", Namespace: ns}
+		secretKey := client.ObjectKey{Name: "s1", Namespace: ns}
+		cmKey := client.ObjectKey{Name: "cm1", Namespace: ns}
+
+		t := buildObjectTemplate(key.Name, key.Namespace,
+			[]templatesv1alpha1.MatrixEntry{buildMatrixListEntry("m1")},
+			[]templatesv1alpha1.Template{
+				{Object: buildTestSecret(secretKey.Name, secretKey.Namespace, map[string]string{
+					"k1": `{{ matrix.m1.k1 }}`,
+				})},
+				{Object: buildTestConfigMap(cmKey.Name, cmKey.Namespace, map[string]string{
+					"k1": `{{ matrix.m1.k1 + matrix.m1.k2 }}`,
+				})},
+			})
+
+		It("Should not apply later objects after an earlier one failed", func() {
+			createNamespace(ns)
+			createServiceAccount("default", ns)
+			createRoleWithBinding("default", ns, []string{"configmaps"})
+
+			Expect(k8sClient.Create(ctx, t)).Should(Succeed())
+			waitUntiReconciled(key, timeout)
+
+			Consistently(func() error {
+				return k8sClient.Get(ctx, cmKey, &v1.ConfigMap{})
+			}, "2s", interval).Should(MatchError("configmaps \"cm1\" not found"))
+
+			assertFailedConfigMaps(key, secretKey, cmKey)
+			assertFailedConfigMap(key, secretKey, "secrets \"s1\" is forbidden")
+			assertFailedConfigMap(key, cmKey, "not applied because")
+		})
+		It("Should apply all objects once the earlier object succeeds", func() {
+			createRoleWithBinding("default", ns, []string{"secrets"})
+
+			triggerReconcile(key)
+			waitUntiReconciled(key, timeout)
+
+			assertAppliedConfigMaps(key, secretKey, cmKey)
+			assertConfigMapData(cmKey, map[string]string{
+				"k1": "3",
+			})
+		})
+		It("Should cleanup", func() {
+			Expect(k8sClient.Delete(ctx, t)).To(Succeed())
+			waitUntilDeleted(key, &templatesv1alpha1.ObjectTemplate{}, timeout)
+		})
+	})
 	Context("Template without permissions to read matrix object", func() {
 		ns := fmt.Sprintf("test-%d", rand.Int64())
 

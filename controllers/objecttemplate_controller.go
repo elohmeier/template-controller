@@ -179,6 +179,8 @@ func (r *ObjectTemplateReconciler) doReconcile(ctx context.Context, rt *template
 	}
 	defer j2.Close()
 
+	// Rendered objects grouped by matrix entry, in template order.
+	var entryResources [][]*unstructured.Unstructured
 	var allResources []*unstructured.Unstructured
 	var errs *multierror.Error
 	var wg sync.WaitGroup
@@ -226,6 +228,7 @@ func (r *ObjectTemplateReconciler) doReconcile(ctx context.Context, rt *template
 				return
 			}
 
+			entryResources = append(entryResources, resources)
 			allResources = append(allResources, resources...)
 		}()
 	}
@@ -249,27 +252,43 @@ func (r *ObjectTemplateReconciler) doReconcile(ctx context.Context, rt *template
 		newAppliedResources[n.Ref.WithoutVersion()] = n
 	}
 
-	wg.Add(len(allResources))
-	for _, resource := range allResources {
-		resource := resource
+	// Matrix entries are applied concurrently, but the objects of one entry are
+	// applied in template order and an entry stops at its first failure. Later
+	// objects can therefore rely on earlier ones, e.g. a deployment that is
+	// reconciled immediately can rely on the Namespace and RBAC rendered before it.
+	wg.Add(len(entryResources))
+	for _, resources := range entryResources {
+		resources := resources
 
 		go func() {
 			defer wg.Done()
-			err := r.applyRenderedObject(ctx, objClient, resource)
-			mutex.Lock()
-			defer mutex.Unlock()
+			var failed *templatesv1alpha1.ObjectRef
+			for _, resource := range resources {
+				ari := templatesv1alpha1.AppliedResourceInfo{
+					Ref:     templatesv1alpha1.ObjectRefFromObject(resource),
+					Success: true,
+				}
 
-			ari := templatesv1alpha1.AppliedResourceInfo{
-				Ref:     templatesv1alpha1.ObjectRefFromObject(resource),
-				Success: true,
-			}
+				var err error
+				if failed != nil {
+					ari.Success = false
+					ari.Error = fmt.Sprintf("not applied because %s failed to apply", failed.String())
+				} else {
+					err = r.applyRenderedObject(ctx, objClient, resource)
+					if err != nil {
+						ari.Success = false
+						ari.Error = err.Error()
+						failed = &ari.Ref
+					}
+				}
 
-			if err != nil {
-				ari.Success = false
-				ari.Error = err.Error()
-				errs = multierror.Append(errs, err)
+				mutex.Lock()
+				if err != nil {
+					errs = multierror.Append(errs, err)
+				}
+				newAppliedResources[ari.Ref.WithoutVersion()] = ari
+				mutex.Unlock()
 			}
-			newAppliedResources[ari.Ref.WithoutVersion()] = ari
 		}()
 	}
 	wg.Wait()
